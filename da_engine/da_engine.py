@@ -124,6 +124,20 @@ class Analysis(object):
 
         return Ka
 
+    def low_rank_solver():
+
+        inflation_factor = 1.0
+        H_dash = self.H - np.mean(self.H, axis=1)[:, np.newaxis]
+        K_dash = self.K - np.mean(self.K, axis=1)[:, np.newaxis]
+        D_dash = self.D - self.H
+        
+        # SVD of matrix C
+        u0, seg0, vt0, ierr = lap.dgesvd(H_dash)
+        if ierr != 0: ValueError('Sqrt_KF: ierr from call dgesvd = {}'.format(ierr))
+
+
+
+
     def EnKF(self):
 
         """
@@ -249,3 +263,5 @@ class Analysis(object):
         Aa = Ka[:, np.newaxis] + x2
 
         return Aa
+
+
